@@ -22,7 +22,3 @@ class HomeController extends Controller
         return view('search', $data);
     }
 }
-// :の後ろは戻り値の型
-
-
-
