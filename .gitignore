@@ -20,28 +20,28 @@ yarn-error.log
 
 
 
-bootstrap/
-config/
-tests/
-storage/
-app/Console/
-app/Exceptions/
-app/Http/Controllers/Auth/
-app/Http/Middleware/
-app/Http/Requests/
-app/Http/Kernel.php
-app/Models/
-app/Providers/
-app/View/
-database/
-public/
-resources/css/
-resources/js/
-resources/views/auth/
-resources/views/components/
-resources/views/layouts/
-resources/views/profile/partials/
-resources/views/profile/edit.blade.php
+# bootstrap/
+# config/
+# tests/
+# storage/
+# app/Console/
+# app/Exceptions/
+# app/Http/Controllers/Auth/
+# app/Http/Middleware/
+# app/Http/Requests/
+# app/Http/Kernel.php
+# app/Models/
+# app/Providers/
+# app/View/
+# database/
+# public/
+# resources/css/
+# resources/js/
+# resources/views/auth/
+# resources/views/components/
+# resources/views/layouts/
+# resources/views/profile/partials/
+# resources/views/profile/edit.blade.php
 
 
 

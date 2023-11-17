@@ -23,11 +23,12 @@ Route::get('/', function () {
 });
 
 // ルーティング後は、コントローラーに任せる
-Route::get('/about', [HomeController::class, 'about']);
-Route::get('/search', [HomeController::class, 'search']);
+Route::get('/about', [HomeController::class, 'about'])->name('about');
+Route::get('/search', [HomeController::class, 'search'])->name('search');
 
 // アイテムコントローラー
-Route::get('/item/{id}', [ItemController::class, 'show']);
+Route::get('/item/', [ItemController::class, 'index'])->name('item.index');
+Route::get('/item/{id}', [ItemController::class, 'show'])->name('item.show');
 Route::get('/dp/{id}', [ItemController::class, 'show']);
 
 // Route::get('/item/{id}', function ($id) {

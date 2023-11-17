@@ -27,7 +27,8 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // TODO: Requestからデータを取得
+        dd($request);
     }
 
     /**
