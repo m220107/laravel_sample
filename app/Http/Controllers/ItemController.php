@@ -74,9 +74,13 @@ class ItemController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(int $id)
     {
-        //
+        // 商品IDから商品データを取得
+        $item = Item::find($id);
+        $data['item'] = $item;
+        // 編集画面を表示
+        return view('item.edit', $data);
     }
 
     /**
@@ -84,14 +88,29 @@ class ItemController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
-    }
+        $data = $request->all();
+        // dd($data);
+        // UPDATA items SET price = xxx WHERE id = XX;
+        // パターン1.
+        // unset($data['_token']);
+        // Item::where('id', $id)->update($data);
 
+        // パターン2.
+        Item::find($id)->fill($data)->save();
+
+        // リダイレクトする
+        return redirect(route('item.edit', $id));
+    }
+    
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(int $id)
     {
-        //
+        // DELETE FROM items WHERE id = xx;
+        Item::destroy($id);
+
+        // リダイレクトする
+        return redirect(route('item.index'));
     }
 }
