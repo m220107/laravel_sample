@@ -94,6 +94,8 @@ class ItemController extends Controller
         // パターン1.
         // unset($data['_token']);
         // Item::where('id', $id)->update($data);
+        // Query Builder（↓の方がいいかも）
+        // DB::table('item')->where('id', $id)->update($data);
 
         // パターン2.
         Item::find($id)->fill($data)->save();
