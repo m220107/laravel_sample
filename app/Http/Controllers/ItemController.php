@@ -9,32 +9,36 @@ use Illuminate\Support\Facades\DB;
 
 class ItemController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(Request $request)
     {
-        // TODO: データをすべて取得
-        // SELECT * FROM items;
-        $items = Item::get();
-        $data['items'] = $items;
+        // Query Parameter から並び変えるカラムを取得
+        $order_column = ($request->order_column) ? $request->order_column : 'id';
+        // Query Parameter から並び変える種類(ASC/DESC)取得
+        $order_value = ($request->order_value) ? $request->order_value : 'asc';
+        if ($item_name = $request->item_name) {
+            //SELECT * FROM items WHERE name LIKE '%xxxx%' ORDER BY XXX ASC/DESC;
+            $items = Item::where('name', 'LIKE', "%{$item_name}%")
+                ->orderBy($order_column, $order_value)
+                ->get();
+        } else {
+            //SELECT * FROM items ORDER BY xxxx ASC / DESC;
+            $items = Item::orderBy($order_column, $order_value)->get();
+        }
 
-        // views/item/index.blade.php
+        $data = [
+            'items' => $items,
+            'item_name' => $item_name,
+        ];
+        // resources/views/item/index.blade.php に受け渡して表示
         return view('item.index', $data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         // views/item/create.blade.php
         return view('item.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(ItemRequest $request)
     {
         $data = $request->all();
@@ -42,9 +46,6 @@ class ItemController extends Controller
         return redirect(route('item.index'));
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(int $id)
     {
         // $items[1] = "コーヒー";
@@ -67,9 +68,6 @@ class ItemController extends Controller
         return view('item.show', $data);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(int $id)
     {
         //商品IDから商品データを取得
@@ -80,30 +78,13 @@ class ItemController extends Controller
         return view('item.edit', $data);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(ItemRequest $request, int $id)
     {
         $data = $request->all();
-        // dd($data);
-        // UPDATE items SET price = xxx WHERE id = xx;
-        // 1. Query Builder
-        // unset($data['_token']);
-        // Item::where('id', $id)->update($data);
-        // DB::table('items')->where('id', $id)->update($data);
-        // 2. Eloquent
-        // SELECT * FROM items WHERE id = xx;
-        // UPDATE items SET price = xxx WHERE id = xx;
         Item::find($id)->fill($data)->save();
-
-        //リダイレクト
         return redirect(route('item.edit', $id));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(int $id)
     {
         // DELETE FROM items WHERE id = xx;
